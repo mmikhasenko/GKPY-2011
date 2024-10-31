@@ -1,5 +1,6 @@
 # fit parameters (constrained)
-const p_wave_pars = (B0 = 1.043, B1 = 0.19, λ1 = 1.39, λ2 = -1.70, ϵ1 = 0.00, ϵ2 = 0.07, e0 = 1.05)
+const p_wave_pars =
+    (B0 = 1.043, B1 = 0.19, λ1 = 1.39, λ2 = -1.70, ϵ1 = 0.00, ϵ2 = 0.07, e0 = 1.05)
 const f_wave_pars = (B0 = 1.09e5, B1 = 1.41e5, λ = 0.051e5)
 
 
@@ -7,7 +8,9 @@ const f_wave_pars = (B0 = 1.09e5, B1 = 1.41e5, λ = 0.051e5)
 function cotδ1_less_1050(s; pars)
     s < 4mπ^2 && return 0.0
     @unpack e0, B0, B1 = pars
-    return sqrt(s) / (2 * kπ(s)^3) * (mρ^2 - s) * (2mπ^3 / (mρ^2 * sqrt(s)) + B0 + B1 * conformal_w(s; s0 = e0^2))
+    return sqrt(s) / (2 * kπ(s)^3) *
+           (mρ^2 - s) *
+           (2mπ^3 / (mρ^2 * sqrt(s)) + B0 + B1 * conformal_w(s; s0 = e0^2))
 end
 function δ1_more_1050(s; pars)
     s < 4mπ^2 && return 0.0
