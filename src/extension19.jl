@@ -95,11 +95,11 @@ function δ0_interval1_deg(s; pars)
     return _δ0_def + shift
 end
 
-let
-    plot()
-    plot!(e -> δ0_interval1_deg(e^2; pars = s_wave_f0_pars), 0.3, 1.4)
-    plot!(e -> δ0_interval2_deg(e^2; pars = s_wave_f0_pars), 1.4, 2.0)
-end
+# let
+#     plot()
+#     plot!(e -> δ0_interval1_deg(e^2; pars = s_wave_f0_pars), 0.3, 1.4)
+#     plot!(e -> δ0_interval2_deg(e^2; pars = s_wave_f0_pars), 1.4, 2.0)
+# end
 
 δ0_interval1(s; pars) = δ0_interval1_deg(s; pars) / 180 * π
 
@@ -181,18 +181,18 @@ function η0_interval2(s; pars)
     return exp(-_sum^2) |> real
 end
 
-let
-    plot()
-    plot!(e -> η0_interval1(e^2 + 1e-6im; pars = s_wave_f0_pars), 0.3, 1.4)
-    plot!(e -> η0_interval2(e^2 + 1e-6im; pars = s_wave_f0_pars), 1.4, 2.0)
-end
+# let
+#     plot()
+#     plot!(e -> η0_interval1(e^2 + 1e-6im; pars = s_wave_f0_pars), 0.3, 1.4)
+#     plot!(e -> η0_interval2(e^2 + 1e-6im; pars = s_wave_f0_pars), 1.4, 2.0)
+# end
 
-let
-    plot()
-    ev = range(0.3, 1.4, 1000)
-    calv = map(e -> t0_interval1(e^2; pars = s_wave_f0_pars), ev)
-    plot!(calv)
-    ev = range(1.4, 2.0, 1000)
-    calv = map(e -> t0_interval2(e^2; pars = s_wave_f0_pars), ev)
-    plot!(calv)
-end
+# let
+#     plot()
+#     ev = range(0.3, 1.4, 1000)
+#     calv = map(e -> t0_interval1(e^2; pars = s_wave_f0_pars), ev)
+#     plot!(calv)
+#     ev = range(1.4, 2.0, 1000)
+#     calv = map(e -> t0_interval2(e^2; pars = s_wave_f0_pars), ev)
+#     plot!(calv)
+# end

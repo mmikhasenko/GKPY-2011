@@ -1,6 +1,9 @@
 using Test
+using PiPiMadrid.Parameters
 using PiPiMadrid.GKPY11
 using PiPiMadrid.PRR19
+import PiPiMadrid: iϵ, mπ
+import PiPiMadrid: J_bar, σ
 
 @testset "Test δ1 function" begin
     @test δ1(0.1) ≈ 0.005348662528080389
@@ -52,17 +55,17 @@ end
 end
 
 @testset "Test conformal amplitude" begin
-    @test t_conf(0.25; pars = s_wave_pars) ≈ 0.5930093347236003 + 0.49525307025021414im
+    @test PRR19.t_conf(0.25; pars = GKPY11.s_wave_pars) ≈ 0.5930131073223124 + 0.49525238695313145im
 end
 
 @testset "Test f0 amplitude" begin
-    @unpack sp = s_wave_f0_pars
-    @test t_f0(sp; pars = s_wave_f0_pars) * 2im * σ(sp, mπ) ≈ -1.0
-    @test t_f0(sp'; pars = s_wave_f0_pars) * 2im * σ(sp', mπ) ≈ 1.0
+    @unpack sp = PRR19.s_wave_f0_pars
+    @test PRR19.t_f0(sp; pars = PRR19.s_wave_f0_pars) * 2im * σ(sp, mπ) ≈ -1.0
+    @test PRR19.t_f0(sp'; pars = PRR19.s_wave_f0_pars) * 2im * σ(sp', mπ) ≈ 1.0
 end
 
 @testset "Test of matching point" begin
-    pars = s_wave_f0_pars
+    pars = PRR19.s_wave_f0_pars
     #
     m_boundary1 = 1.4
     sm = m_boundary1^2

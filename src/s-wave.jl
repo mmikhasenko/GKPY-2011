@@ -28,7 +28,7 @@ julia> δ0(0.5^2)
 39.86680197881492
 ```
 """
-function δ0(s; pars = s_wave_pars)
+function δ0(s::Real; pars = s_wave_pars)
     @unpack m_boundary1, m_boundary3 = pars
     if s <= (2mπ)^2
         return 0.0
@@ -56,7 +56,7 @@ function cotδ0_interval1(s::Complex; pars = s_wave_pars)
     return _cotδ0_interval1
 end
 
-cotδ0_interval1(s::Real; pars = s_wave_pars) = cotδ0_interval1(s + iϵ; pars)
+cotδ0_interval1(s::Real; pars = s_wave_pars) = cotδ0_interval1(s + iϵ; pars) |> real
 
 function δ0_interval1(s; pars = s_wave_pars)
     _cotδ0_interval1 = cotδ0_interval1(s; pars)
