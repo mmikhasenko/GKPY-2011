@@ -22,4 +22,4 @@ There is no related issue.
 <!-- leave PR as draft until all is checked -->
 - [ ] Tests are passing
 - [ ] Lint workflow is passing
-- [ ] Docs were updated and workflow is passing
+- [ ] Docs were updated
