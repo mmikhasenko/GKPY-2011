@@ -1,0 +1,12 @@
+# Changes here will be overwritten by Copier
+AnswerStrategy: minimum
+Authors: Mikhail Mikhasenko <mikhail.mikhasenko@cern.ch>
+JuliaIndentation: 4
+JuliaMinVersion: '1.7'
+License: MIT
+LicenseCopyrightHolders: Mikhail Mikhasenko
+PackageName: GKPY11
+PackageOwner: mmikhasenko
+PackageUUID: 768ee2b6-c705-4f61-b10f-f525213ab444
+_commit: v0.14.0
+_src_path: https://github.com/JuliaBesties/BestieTemplate.jl
