@@ -8,7 +8,7 @@
 [![DOI](https://zenodo.org/badge/DOI/FIXME)](https://doi.org/FIXME)
 [![BestieTemplate](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/JuliaBesties/BestieTemplate.jl/main/docs/src/assets/badge.json)](https://github.com/JuliaBesties/BestieTemplate.jl)
 
-Julia implementation of the $\pi\pi$ interaction in S,P, and F waves following the GKPY11 model, from the ["Pion-pion scattering amplitude, IV"](https://inspirehep.net/literature/889131).
+Julia implementation of the $\pi\pi$ scattering amplitudes in S,P, and F waves following the GKPY11 model, from the ["Pion-pion scattering amplitude, IV"](https://inspirehep.net/literature/889131).
 
 ## How to Cite
 
