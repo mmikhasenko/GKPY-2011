@@ -43,7 +43,7 @@ function δ0(s; pars = s_wave_pars)
 end
 
 
-function cotδ0_interval1(s; pars = s_wave_pars)
+function cotδ0_interval1(s::Complex; pars = s_wave_pars)
     @unpack b_coeffs, z0 = pars
     #
     w = conformal_w(s; s0 = (2 * mK)^2)
@@ -55,6 +55,8 @@ function cotδ0_interval1(s; pars = s_wave_pars)
         (z0^2 / (mπ * sqrt(s)) + conf_expansion)
     return _cotδ0_interval1
 end
+
+cotδ0_interval1(s::Real; pars = s_wave_pars) = cotδ0_interval1(s + iϵ; pars)
 
 function δ0_interval1(s; pars = s_wave_pars)
     _cotδ0_interval1 = cotδ0_interval1(s; pars)

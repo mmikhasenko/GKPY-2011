@@ -13,3 +13,5 @@ kK(s) = breakup(s, mK)
 kη(s) = breakup(s, mη)
 
 conformal_w(s; s0::Float64) = (sqrt(s) - sqrt(s0 - s)) / (sqrt(s) + sqrt(s0 - s))
+
+const iϵ = 1e-6im
