@@ -30,6 +30,12 @@ end
 
 Computes the phase shift of the P-wave.
 The default value of parameters are taken from the paper (see GKPY11.p_wave_pars).
+
+# Example
+```julia
+julia> δ1(0.5^2)
+0.7547425109417016
+```
 """
 function δ1(s; pars = p_wave_pars)
     v = _δ1(s; pars = p_wave_pars)
@@ -56,10 +62,17 @@ function cotδ3(s; pars = f_wave_pars)
     w = conformal_w(s; s0 = 1.45^2)
     return sqrt(s) / (2 * kπ(s)^7) * mπ^6 * (2λ * mπ / sqrt(s) + B0 + B1 * w)
 end
+
 """
     δ3(s; pars=f_wave_pars)
 
 Computes the phase shift of the F-wave.
 The default value of parameters are taken from the paper (see GKPY11.f_wave_pars).
+
+# Example
+```julia
+julia> δ3(0.5^2)
+0.04172757888407087
+```
 """
 δ3(s; pars = f_wave_pars) = acot(cotδ3(s; pars))

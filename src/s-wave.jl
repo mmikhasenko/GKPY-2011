@@ -16,6 +16,18 @@ end
 
 const s_wave_pars = SWavePars();
 
+"""
+    δ0(s; pars=s_wave_pars)
+
+Computes the phase shift of the F-wave.
+The default value of parameters are taken from the paper (see GKPY11.s_wave_pars).
+
+# Example
+```julia
+julia> δ0(0.5^2)
+39.86680197881492
+```
+"""
 function δ0(s; pars = s_wave_pars)
     @unpack m_boundary1, m_boundary3 = pars
     if s <= (2mπ)^2
