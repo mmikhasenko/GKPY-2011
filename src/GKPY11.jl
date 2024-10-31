@@ -11,7 +11,4 @@ include("odd-waves.jl")
 export δ0
 include("s-wave.jl")
 
-# export
-# include("extension_19.jl")
-
 end

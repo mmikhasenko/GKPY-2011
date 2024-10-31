@@ -3,10 +3,8 @@ exclude = [
   "@cite",
   "^https://github.com/.*/releases/tag/v.*$",
   "^https://doi.org/FIXME$",
-  "^https://mmikhasenko.github.io/GKPY11.jl/stable$",
-  "zenodo.org/badge/DOI/FIXME$"
+  "^https://mmikhasenko.github.io/PiPiMadrid.jl/stable$",
+  "zenodo.org/badge/DOI/FIXME$",
 ]
 
-exclude_path = [
-  "docs/build"
-]
+exclude_path = ["docs/build"]
