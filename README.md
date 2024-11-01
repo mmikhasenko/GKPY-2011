@@ -48,7 +48,7 @@ let
 end
 ```
 
-![phase_shifts](https://github.com/user-attachments/assets/bf5ab70e-5a94-48e8-b218-e40314e142a1)
+![pipi_spectum](https://github.com/user-attachments/assets/18efdaed-2d38-4188-8d88-769e41755455)
 
 ## How to Cite
 
