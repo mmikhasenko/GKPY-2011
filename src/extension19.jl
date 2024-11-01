@@ -9,6 +9,8 @@ s_wave_f0_pars = (
     m_boundary1 = 1.4,
     coeff_d = (-5.4, 0.0, 0.0),
     coeff_ϵ_from2 = (10.3, 0.0, 0.0),
+    #
+    m_boundary2 = 2.0,
 )
 
 function conformal_f_KK(s, coeff)
@@ -179,6 +181,22 @@ function η0_interval2(s; pars)
         ϵi * Q^(i - 1)
     end
     return exp(-_sum^2) |> real
+end
+
+
+function δ0_deg(s::Real; pars = s_wave_f0_pars)
+    @unpack m_boundary1 = pars
+    sm = m_boundary1^2
+    s < m_boundary1^2 && return δ0_interval1_deg(s; pars)
+    s < m_boundary2^2 && return δ0_interval2_deg(s; pars)
+    δ0_interval2_deg(m_boundary2^2; pars)
+end
+
+function δ0(s::Real; pars = s_wave_f0_pars)
+    @unpack m_boundary1, m_boundary2 = pars
+    s < m_boundary1^2 && return δ0_interval1(s; pars)
+    s < m_boundary2^2 && return δ0_interval2(s; pars)
+    δ0_interval2(m_boundary2^2; pars)
 end
 
 # let

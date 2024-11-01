@@ -1,52 +1,54 @@
 using Test
 using PiPiMadrid.Parameters
+#
 using PiPiMadrid.GKPY11
 using PiPiMadrid.PRR19
+#
 import PiPiMadrid: iϵ, mπ
 import PiPiMadrid: J_bar, σ
 
 @testset "Test δ1 function" begin
-    @test δ1(0.1) ≈ 0.005348662528080389
-    @test δ1(0.5) ≈ 0.7547425109417016
-    @test δ1(1.5) ≈ 2.9163793203966426
-    @test δ1(2.0) ≈ 2.967957560740781
+    @test GKPY11.δ1(0.1) ≈ 0.005348662528080389
+    @test GKPY11.δ1(0.5) ≈ 0.7547425109417016
+    @test GKPY11.δ1(1.5) ≈ 2.9163793203966426
+    @test GKPY11.δ1(2.0) ≈ 2.967957560740781
 end
 
 @testset "Test cotδ1 function" begin
-    @test cotδ1(0.1) ≈ 186.9608446351338
-    @test cotδ1(0.5) ≈ 1.0632707316721013
-    @test cotδ1(1.5) ≈ -4.36490825792332
-    @test cotδ1(2.0) ≈ -5.701209421847014
+    @test GKPY11.cotδ1(0.1) ≈ 186.9608446351338
+    @test GKPY11.cotδ1(0.5) ≈ 1.0632707316721013
+    @test GKPY11.cotδ1(1.5) ≈ -4.36490825792332
+    @test GKPY11.cotδ1(2.0) ≈ -5.701209421847014
 end
 
 @testset "Test δ3 function" begin
-    @test δ3(0.1) ≈ 4.4539237752958584e-7
-    @test δ3(0.5) ≈ 0.0020545780665097556
-    @test δ3(1.5) ≈ 0.04172757888407087
-    @test δ3(2.0) ≈ 0.07382739896763756
+    @test GKPY11.δ3(0.1) ≈ 4.4539237752958584e-7
+    @test GKPY11.δ3(0.5) ≈ 0.0020545780665097556
+    @test GKPY11.δ3(1.5) ≈ 0.04172757888407087
+    @test GKPY11.δ3(2.0) ≈ 0.07382739896763756
 end
 
 @testset "Test cotδ3 function" begin
-    @test cotδ3(0.1) ≈ 2.2452113023274797e6
-    @test cotδ3(0.5) ≈ 486.7172531445134
-    @test cotδ3(1.5) ≈ 23.951054971265382
-    @test cotδ3(2.0) ≈ 13.520488669013462
+    @test GKPY11.cotδ3(0.1) ≈ 2.2452113023274797e6
+    @test GKPY11.cotδ3(0.5) ≈ 486.7172531445134
+    @test GKPY11.cotδ3(1.5) ≈ 23.951054971265382
+    @test GKPY11.cotδ3(2.0) ≈ 13.520488669013462
 end
 
 @testset "Test δ0 function" begin
-    @test δ0(0.5^2) ≈ 39.86680197881492 / 180 * π
-    @test δ0(1.1^2) ≈ 249.68337945026678 / 180 * π
-    @test δ0(1.4^2) ≈ 310.8928743137025 / 180 * π
-    @test δ0(2.0^2) ≈ 359.88122836077986 / 180 * π
+    @test GKPY11.δ0(0.5^2) ≈ 39.86680197881492 / 180 * π
+    @test GKPY11.δ0(1.1^2) ≈ 249.68337945026678 / 180 * π
+    @test GKPY11.δ0(1.4^2) ≈ 310.8928743137025 / 180 * π
+    @test GKPY11.δ0(2.0^2) ≈ 359.88122836077986 / 180 * π
 end
 
 @testset "Test CheybyshevT function" begin
-    @test CheybyshevT{0}()(0.5) ≈ 1.0
-    @test CheybyshevT{1}()(0.5) ≈ 0.5
-    @test CheybyshevT{2}()(0.5) ≈ -0.5
-    @test CheybyshevT{3}()(0.5) ≈ -1.0
-    @test CheybyshevT{4}()(0.5) ≈ -0.5
-    @test CheybyshevT{5}()(0.5) ≈ 0.5
+    @test PRR19.CheybyshevT{0}()(0.5) ≈ 1.0
+    @test PRR19.CheybyshevT{1}()(0.5) ≈ 0.5
+    @test PRR19.CheybyshevT{2}()(0.5) ≈ -0.5
+    @test PRR19.CheybyshevT{3}()(0.5) ≈ -1.0
+    @test PRR19.CheybyshevT{4}()(0.5) ≈ -0.5
+    @test PRR19.CheybyshevT{5}()(0.5) ≈ 0.5
 end
 
 @testset "Test Chew-Mandelsta" begin
@@ -69,7 +71,7 @@ end
     #
     m_boundary1 = 1.4
     sm = m_boundary1^2
-    @test δ0_interval1_deg(sm; pars) ≈ δ0_interval2_deg(sm; pars)
-    @test η0_interval1(sm; pars) ≈ η0_interval2(sm; pars)
-    @test t0_interval1(sm; pars) ≈ t0_interval2(sm; pars)
+    @test PRR19.δ0_interval1_deg(sm; pars) ≈ PRR19.δ0_interval2_deg(sm; pars)
+    @test PRR19.η0_interval1(sm; pars) ≈ PRR19.η0_interval2(sm; pars)
+    @test PRR19.t0_interval1(sm; pars) ≈ PRR19.t0_interval2(sm; pars)
 end
