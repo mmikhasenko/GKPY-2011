@@ -1,4 +1,4 @@
-# GKPY11
+# PiPiMadrid
 
 [![Build Status](https://github.com/mmikhasenko/PiPiMadrid.jl/workflows/Test/badge.svg)](https://github.com/mmikhasenko/PiPiMadrid.jl/actions)
 [![Test workflow status](https://github.com/mmikhasenko/PiPiMadrid.jl/actions/workflows/Test.yml/badge.svg?branch=main)](https://github.com/mmikhasenko/PiPiMadrid.jl/actions/workflows/Test.yml?query=branch%3Amain)
@@ -7,13 +7,15 @@
 [![DOI](https://zenodo.org/badge/DOI/FIXME)](https://doi.org/FIXME)
 [![BestieTemplate](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/JuliaBesties/BestieTemplate.jl/main/docs/src/assets/badge.json)](https://github.com/JuliaBesties/BestieTemplate.jl)
 
-Julia implementation of the $\pi\pi$ scattering amplitudes in S,P, and F waves following the GKPY11 model, from the ["Pion-pion scattering amplitude, IV"](https://inspirehep.net/literature/889131).
+Julia implementation of the $\pi\pi$ scattering amplitudes from Madrid group.
 
+1. Module `GKPY11` implements S,P, and F waves following the ["Pion-pion scattering amplitude, IV"](https://inspirehep.net/literature/889131) paper.
+2. Module `PRR19` codes the S-wave from the ["Global parameterization of ππ scattering up to 2 GeV"](https://inspirehep.net/literature/1747223)
 
 ## Installation
 
 ```julia
-pkg> add https://github.com/mmikhasenko/GKPY11.jl.git
+pkg> add https://github.com/mmikhasenko/PiPiMadrid.jl.git
 ```
 
 ## Usage
@@ -24,10 +26,10 @@ Signature of each function is
 ```
 δ0(s; pars)
 ```
-where the parameters are set to defualt values given by `s_wave_pars`, `p_wave_pars`, and `f_wave_pars`.
+where the parameters are set to default values given by `s_wave_pars`, `p_wave_pars`, and `f_wave_pars`.
 
 ```julia
-using PiPiMadrid
+using PiPiMadrid.GKPY11
 using Plots
 
 let
