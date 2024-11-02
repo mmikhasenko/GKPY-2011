@@ -2,10 +2,8 @@ module GKPY11
 
 using Parameters
 
-import ..iϵ
-import ..mπ, ..mK, ..mη, ..mρ, ..Γρ
-import ..breakup, ..σ
-import ..conformal_w
+import ..PiPiMadrid: iϵ, mπ, mK, mη, mρ, Γρ
+import ..PiPiMadrid: breakup, σ, conformal_w
 
 kπ(s) = breakup(s, mπ)
 kK(s) = breakup(s, mK)
