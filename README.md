@@ -40,9 +40,9 @@ let
     plot(xlab = "m(ππ) [GeV]",
         ylab = "phase shift [rad]",
         title = "scattering phase shifts", leg = :topleft)
-    plot!(e -> GKPY11.δ0(e^2), support..., label = "δ0 GPKY11", lw = 2, ls = :dash)
-    plot!(e -> GKPY11.δ1(e^2), support..., label = "δ1 GPKY11", lw = 2, ls = :dash)
-    plot!(e -> GKPY11.δ3(e^2), support..., label = "δ3 GPKY11", lw = 2, ls = :dash)
+    plot!(e -> GKPY11.δ0(e^2), support..., label = "δ0 GKPY11", lw = 2, ls = :dash)
+    plot!(e -> GKPY11.δ1(e^2), support..., label = "δ1 GKPY11", lw = 2, ls = :dash)
+    plot!(e -> GKPY11.δ3(e^2), support..., label = "δ3 GKPY11", lw = 2, ls = :dash)
     vspan!([GKPY11.s_wave_pars.m_boundary3, support[2]], alpha = 0.1)
     plot!(e -> PRR19.δ0(e^2; pars = PRR19.s_wave_f0_pars), 0.3, 2.0, label = "δ0 PRR19-I", lw = 2)
 end
