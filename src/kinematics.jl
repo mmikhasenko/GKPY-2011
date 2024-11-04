@@ -14,3 +14,9 @@ conformal_w(s; s0::Float64) = (sqrt(s) - sqrt(s0 - s)) / (sqrt(s) + sqrt(s0 - s)
 
 conformal_w1(s; s_left::Float64, s_right::Float64) =
     2 * (sqrt(s) - sqrt(s_left)) / (sqrt(s_right) - sqrt(s_left)) - 1
+
+kπ(s) = breakup(s, mπ)
+kK(s) = breakup(s, mK)
+kη(s) = breakup(s, mη)
+
+amplitude_from_phase_and_elasticity(δ, η, m) = (η .* exp(2im * δ) - 1) / (2σ(s, m))

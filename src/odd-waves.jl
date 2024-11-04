@@ -1,9 +1,3 @@
-# fit parameters (constrained)
-const p_wave_pars =
-    (B0 = 1.043, B1 = 0.19, λ1 = 1.39, λ2 = -1.70, ϵ1 = 0.00, ϵ2 = 0.07, e0 = 1.05)
-const f_wave_pars = (B0 = 1.09e5, B1 = 1.41e5, λ = 0.051e5)
-
-
 # P-wave
 function cotδ1_less_1050(s; pars)
     s < 4mπ^2 && return 0.0
@@ -32,7 +26,7 @@ end
     δ1(s; pars=p_wave_pars)
 
 Computes the phase shift of the P-wave.
-The default value of parameters are taken from the paper (see GKPY11.p_wave_pars).
+The default value of parameters are taken from the paper (see p_wave_pars).
 
 # Example
 ```julia
@@ -40,8 +34,8 @@ julia> δ1(0.5^2)
 0.7547425109417016
 ```
 """
-function δ1(s; pars = p_wave_pars)
-    v = _δ1(s; pars = p_wave_pars)
+function δ1(model::GKPY11, s; pars = model.P)
+    v = _δ1(s; pars)
     s < 0.8^2 ? v : (v > 0 ? v : v + π)
 end
 
@@ -51,31 +45,71 @@ end
 Computes the cotangence of the P-wave phase shift.
 The default value of parameters are taken from the paper (see GKPY11.p_wave_pars).
 """
-cotδ1(s; pars = p_wave_pars) = cot(δ1(s; pars))
+cotδ1(model::GKPY11, s; pars = model.P) = cot(δ1(model, s; pars))
 
-# D-wave
+p_wave_phase_shift(model::GKPY11, s::Real; pars = model.P) = δ1(model, s; pars)
+p_wave_elasticity(model::GKPY11, s::Real; pars = model.P) = one(s)
+
 """
-    cotδ3(s; pars=f_wave_pars)
+    p_wave_amplitude(model::GKPY11, s)
+
+Computes the P-wave scattering amplitude for a given model `model` at energy squared `s` (in GeV²).
+The amplitude is computed from the P-wave phase shift and elasticity, and returns a complex value.
+
+## See also:
+- [`p_wave_phase_shift`](@ref p_wave_phase_shift): Computes the P-wave phase shift
+- [`p_wave_elasticity`](@ref p_wave_elasticity): Computes the P-wave elasticity.
+"""
+function p_wave_amplitude(model::GKPY11, s::Real; pars = model.P)
+    _δ = p_wave_phase_shift(model, s; pars)
+    _η = p_wave_elasticity(model, s; pars)
+    _t = amplitude_from_phase_and_elasticity(_δ, _η, mπ)
+    return _t
+end
+
+# F-wave
+"""
+    cotδ3(model::GKPY11, s; pars = model.F)
 
 Computes the cotangence of the F-wave phase shift.
 The default value of parameters are taken from the paper (see GKPY11.f_wave_pars).
 """
-function cotδ3(s; pars = f_wave_pars)
+function cotδ3(model::GKPY11, s; pars = model.F)
     @unpack B0, B1, λ = pars
     w = conformal_w(s; s0 = 1.45^2)
     return sqrt(s) / (2 * kπ(s)^7) * mπ^6 * (2λ * mπ / sqrt(s) + B0 + B1 * w)
 end
 
+δ3(model::GKPY11, s; pars = model.F) = acot(cotδ3(model, s; pars))
+
 """
-    δ3(s; pars=f_wave_pars)
+    f_wave_phase_shift(model::GKPY11, s::Real)
 
 Computes the phase shift of the F-wave.
 The default value of parameters are taken from the paper (see GKPY11.f_wave_pars).
 
 # Example
 ```julia
-julia> δ3(0.5^2)
+julia> f_wave_phase_shift(GKPY11.f_default, 0.5^2)
 0.04172757888407087
 ```
 """
-δ3(s; pars = f_wave_pars) = acot(cotδ3(s; pars))
+f_wave_phase_shift(model::GKPY11, s::Real; pars = model.F) = δ3(model, s; pars)
+f_wave_elasticity(model::GKPY11, s::Real; pars = model.F) = one(s)
+
+"""
+    f_wave_amplitude(model::GKPY11, s; pars = model.F)
+
+Computes the P-wave scattering amplitude for a given model `model` at energy squared `s` (in GeV²).
+The amplitude is computed from the P-wave phase shift and elasticity, and returns a complex value.
+
+## See also:
+- [`f_wave_phase_shift`](@ref f_wave_phase_shift): Computes the P-wave phase shift in radians.
+- [`f_wave_elasticity`](@ref f_wave_elasticity): Computes the P-wave elasticity.
+"""
+function f_wave_amplitude(model::GKPY11, s::Real; pars = model.F)
+    _δ = f_wave_phase_shift(model, s; pars)
+    _η = f_wave_elasticity(model, s; pars)
+    _t = amplitude_from_phase_and_elasticity(_δ, _η, mπ)
+    return _t
+end
