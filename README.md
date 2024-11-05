@@ -29,23 +29,24 @@ Signature of each function is
 where the parameters are set to default values given by `s_wave_pars`, `p_wave_pars`, and `f_wave_pars`.
 
 ```julia
-using PiPiMadrid.GKPY11
-using PiPiMadrid.PRR19
+using PiPiMadrid
 using Plots
 
-theme(:juno, lab = "")
+theme(:wong2, lab = "", frame = :box, grid = false)
 
 let
     support = (0.3, 2.0)
     plot(xlab = "m(ππ) [GeV]",
         ylab = "phase shift [rad]",
         title = "scattering phase shifts", leg = :topleft)
-    plot!(e -> GKPY11.δ0(e^2), support..., label = "δ0 GKPY11", lw = 2, ls = :dash)
-    plot!(e -> GKPY11.δ1(e^2), support..., label = "δ1 GKPY11", lw = 2, ls = :dash)
-    plot!(e -> GKPY11.δ3(e^2), support..., label = "δ3 GKPY11", lw = 2, ls = :dash)
-    vspan!([GKPY11.s_wave_pars.m_boundary3, support[2]], alpha = 0.1)
-    plot!(e -> PRR19.δ0(e^2; pars = PRR19.s_wave_f0_pars), 0.3, 2.0, label = "δ0 PRR19-I", lw = 2)
+    plot!(e -> s_wave_phase_shift(GKPY11_default(), e^2), support..., label = "δ0 GKPY11")
+    plot!(e -> p_wave_phase_shift(GKPY11_default(), e^2), support..., label = "δ1 GKPY11")
+    plot!(e -> f_wave_phase_shift(GKPY11_default(), e^2), support..., label = "δ3 GKPY11")
+    plot!(e -> s_wave_phase_shift(PRR19_default(), e^2), 0.3, 2.0, label = "δ0 PRR19")
+    vspan!([GKPY11_default().S.m_boundary3, support[2]], alpha = 0.2)
 end
+
+savefig("~/Documents/phase_shift.png")
 ```
 
 ![pipi_spectum](https://github.com/user-attachments/assets/18efdaed-2d38-4188-8d88-769e41755455)
