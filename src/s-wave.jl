@@ -104,9 +104,9 @@ The parameters, `pars` provided as an key argument overrides the model papametes
 - [`s_wave_phase_shift`](@ref s_wave_phase_shift): Computes the S-wave phase shift
 - [`s_wave_elasticity`](@ref s_wave_elasticity): Computes the S-wave elasticity.
 """
-function s_wave_amplitude(model::GKPY11, s::Real; pars = model.P)
+function s_wave_amplitude(model::GKPY11, s::Real; pars = model.S)
     _δ = s_wave_phase_shift(model, s; pars)
     _η = s_wave_elasticity(model, s; pars)
-    _t = amplitude_from_phase_and_elasticity(_δ, _η, mπ)
+    _t = amplitude_from_phase_and_elasticity(_δ, _η, σ(s, mπ))
     return _t
 end

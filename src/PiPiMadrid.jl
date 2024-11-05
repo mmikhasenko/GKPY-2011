@@ -16,7 +16,7 @@ include("odd-waves.jl")
 include("s-wave.jl")
 
 # PRR19 model
-export PRR1_default
+export PRR19_default
 include("PRR19.jl")
 include("cheybyshev.jl")
 include("extension19.jl")

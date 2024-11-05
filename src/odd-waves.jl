@@ -63,7 +63,7 @@ The amplitude is computed from the P-wave phase shift and elasticity, and return
 function p_wave_amplitude(model::GKPY11, s::Real; pars = model.P)
     _δ = p_wave_phase_shift(model, s; pars)
     _η = p_wave_elasticity(model, s; pars)
-    _t = amplitude_from_phase_and_elasticity(_δ, _η, mπ)
+    _t = amplitude_from_phase_and_elasticity(_δ, _η, σ(s, mπ))
     return _t
 end
 
@@ -110,6 +110,6 @@ The amplitude is computed from the P-wave phase shift and elasticity, and return
 function f_wave_amplitude(model::GKPY11, s::Real; pars = model.F)
     _δ = f_wave_phase_shift(model, s; pars)
     _η = f_wave_elasticity(model, s; pars)
-    _t = amplitude_from_phase_and_elasticity(_δ, _η, mπ)
+    _t = amplitude_from_phase_and_elasticity(_δ, _η, σ(s, mπ))
     return _t
 end

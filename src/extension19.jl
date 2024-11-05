@@ -1,18 +1,3 @@
-
-# default parameters from the paper
-s_wave_f0_pars = (
-    b_coeffs = (12.2, -0.9, 15.9, -5.7, -22.5, 6.9),
-    z0 = 0.137, # Adler zero at z0^2/2
-    coeff_K = (5.25, -4.4, 0.175, -0.28),
-    sp = (0.996 + 0.025im)^2,
-    #
-    m_boundary1 = 1.4,
-    coeff_d = (-5.4, 0.0, 0.0),
-    coeff_ϵ_from2 = (10.3, 0.0, 0.0),
-    #
-    m_boundary2 = 2.0,
-)
-
 function conformal_f_KK(s, coeff)
     w1 = conformal_w1(s; s_left = (2mK)^2, s_right = 1.5^2)
     _sum = sum(enumerate(coeff)) do (i, Ki)
@@ -61,7 +46,12 @@ function get_MG(s_p, coeff_K)
     (; Msq, G)
 end
 
-t_conf(s; pars) = 1 / σ(s, mπ) / (cotδ0_interval1(s; pars) - 1im)
+struct GKPY11_pure <: GKPY11
+end
+t_conf(s; pars) = 1 / σ(s, mπ) / (cotδ0_interval1(GKPY11_pure(), s; pars) - 1im)
+
+## Interval 1
+
 
 """
     t0_interval1(s; pars)
@@ -69,14 +59,14 @@ t_conf(s; pars) = 1 / σ(s, mπ) / (cotδ0_interval1(s; pars) - 1im)
 The scattering amplitude of the interval1 is computed from a combination of the conformal amplitude and the f0 amplitude.
 The two parametrizations are combined on the level of S-matrix elements, S = S_conf * S_f0.
 """
-function t0_interval1(s; pars)
+function t0_interval1(model::PRR19, s; pars = model.S)
     _tconf = t_conf(s; pars)
     _tf0 = t_f0(s; pars)
     return _tconf + _tf0 + 2im * σ(s, mπ) * _tconf * _tf0
 end
 
-function δ0_interval1_deg(s; pars)
-    _t0 = t0_interval1(s; pars)
+function δ0_interval1_deg(model::PRR19, s; pars = model.S)
+    _t0 = t0_interval1(model, s; pars)
     _δ0 = angle(_t0 * 2im * σ(s, mπ) + 1) / 2
     _δ0_def = _δ0 / π * 180
     shift = 0
@@ -97,14 +87,18 @@ function δ0_interval1_deg(s; pars)
     return _δ0_def + shift
 end
 
-# let
-#     plot()
-#     plot!(e -> δ0_interval1_deg(e^2; pars = s_wave_f0_pars), 0.3, 1.4)
-#     plot!(e -> δ0_interval2_deg(e^2; pars = s_wave_f0_pars), 1.4, 2.0)
-# end
 
-δ0_interval1(s; pars) = δ0_interval1_deg(s; pars) / 180 * π
+"""
+    η0_interval1(s; pars)
 
+Inelasticity for the first interval is computed from the scattering amplitude,
+by taking absolute value of `η = |1 + 2iσ t|`.
+"""
+η0_interval1(model::PRR19, s; pars = model.S) = abs(1 + t0_interval1(model, s; pars) * 2im * σ(s, mπ))
+
+
+
+## Interval 2
 
 """
     δ0_interval2_deg(s; pars)
@@ -112,15 +106,15 @@ end
 Calculate the phase shift for the second interval, 1.4 < sqrt(s) < 2.0 GeV.
 It extends the phase shift from the first interval, by polynomial dependence.
 """
-function δ0_interval2_deg(s::Real; pars)
+function δ0_interval2_deg(model::PRR19, s::Real; pars = model.S)
     @unpack coeff_d = pars
     #
     m_boundary1 = 1.4
     sm = m_boundary1^2
     w2(sx) = conformal_w1(sx; s_left = sm, s_right = 2.0^2)
-    δ0_boundary1 = δ0_interval1_deg(sm; pars)
+    δ0_boundary1 = δ0_interval1_deg(model, sm; pars)
     ϵ = 1e-6
-    dδ0_ds = (δ0_interval1_deg(sm + ϵ; pars) - δ0_boundary1) / ϵ
+    dδ0_ds = (δ0_interval1_deg(model, sm + ϵ; pars) - δ0_boundary1) / ϵ
     dw2_ds = (w2(sm + ϵ) - w2(sm - ϵ)) / (2ϵ)
     #
     _w2 = w2(s)
@@ -135,7 +129,7 @@ function δ0_interval2_deg(s::Real; pars)
     return _δ0
 end
 
-δ0_interval2(s; pars) = δ0_interval2_deg(s; pars) / 180 * π
+δ0_interval2(model::PRR19, s; pars = model.S) = δ0_interval2_deg(model, s; pars) / 180 * π
 
 """
     t0_interval2(s; pars)
@@ -143,19 +137,12 @@ end
 Calculate the scattering amplitude in the real axis for the second interval,
 1.4 < sqrt(s) < 2.0 GeV, using phenomenological parametrization of the phase shift and inelasticity.
 """
-function t0_interval2(s::Real; pars)
-    _δ0 = δ0_interval2(s; pars)
-    _eta = η0_interval2(s; pars)
+function t0_interval2(model::PRR19, s::Real; pars = model.S)
+    _δ0 = δ0_interval2(model, s; pars)
+    _eta = η0_interval2(model, s; pars)
     return (exp(2im * _δ0) * _eta - 1) / (2im * σ(s, mπ))
 end
 
-"""
-    η0_interval1(s; pars)
-
-Inelasticity for the first interval is computed from the scattering amplitude,
-by taking absolute value of `η = |1 + 2iσ t|`.
-"""
-η0_interval1(s; pars) = abs(1 + t0_interval1(s; pars) * 2im * σ(s, mπ))
 
 """
     η0_interval2(s; pars)
@@ -163,14 +150,14 @@ by taking absolute value of `η = |1 + 2iσ t|`.
 Inelasticity for the second interval is computed using phenomenological parametrization.
 It is a exponent of a square of a polynomial of a break-up momentum.
 """
-function η0_interval2(s; pars)
+function η0_interval2(model::PRR19, s; pars = model.S)
     @unpack coeff_ϵ_from2, m_boundary1 = pars
     sm = m_boundary1^2
     #
-    _ηm = η0_interval1(sm; pars)
+    _ηm = η0_interval1(model, sm; pars)
     ϵ0 = sqrt(-log(_ηm))
     ϵ = 1e-6
-    dη0_ds = (η0_interval1(sm + ϵ; pars) - _ηm) / ϵ
+    dη0_ds = (η0_interval1(model, sm + ϵ; pars) - _ηm) / ϵ
     #
     qm = breakup(sm, mπ)
     ϵ1 = -4qm^2 / ϵ0 * dη0_ds / _ηm
@@ -183,34 +170,25 @@ function η0_interval2(s; pars)
     return exp(-_sum^2) |> real
 end
 
-
-function δ0_deg(s::Real; pars = s_wave_f0_pars)
-    @unpack m_boundary1 = pars
-    sm = m_boundary1^2
-    s < m_boundary1^2 && return δ0_interval1_deg(s; pars)
-    s < m_boundary2^2 && return δ0_interval2_deg(s; pars)
-    δ0_interval2_deg(m_boundary2^2; pars)
-end
-
-function δ0(s::Real; pars = s_wave_f0_pars)
+function δ0_deg(model::PRR19, s::Real; pars = model.S)
     @unpack m_boundary1, m_boundary2 = pars
-    s < m_boundary1^2 && return δ0_interval1(s; pars)
-    s < m_boundary2^2 && return δ0_interval2(s; pars)
-    δ0_interval2(m_boundary2^2; pars)
+    s < m_boundary1^2 && return δ0_interval1_deg(model, s; pars)
+    s < m_boundary2^2 && return δ0_interval2_deg(model, s; pars)
+    δ0_interval2_deg(model, m_boundary2^2; pars)
 end
 
-# let
-#     plot()
-#     plot!(e -> η0_interval1(e^2 + 1e-6im; pars = s_wave_f0_pars), 0.3, 1.4)
-#     plot!(e -> η0_interval2(e^2 + 1e-6im; pars = s_wave_f0_pars), 1.4, 2.0)
-# end
+s_wave_phase_shift(model::PRR19, s::Real; pars = model.S) = δ0_deg(model, s; pars) / 180 * π
 
-# let
-#     plot()
-#     ev = range(0.3, 1.4, 1000)
-#     calv = map(e -> t0_interval1(e^2; pars = s_wave_f0_pars), ev)
-#     plot!(calv)
-#     ev = range(1.4, 2.0, 1000)
-#     calv = map(e -> t0_interval2(e^2; pars = s_wave_f0_pars), ev)
-#     plot!(calv)
-# end
+function s_wave_elasticity(model::PRR19, s::Real; pars = model.S)
+    @unpack m_boundary1, m_boundary2 = pars
+    s < m_boundary1^2 && return η0_interval1(model, s; pars)
+    s < m_boundary2^2 && return η0_interval2(model, s; pars)
+    η0_interval2(model, m_boundary2^2; pars)
+end
+
+function s_wave_amplitude(model::PRR19, s::Real; pars = model.S)
+    _δ = s_wave_phase_shift(model, s; pars)
+    _η = s_wave_elasticity(model, s; pars)
+    _t = amplitude_from_phase_and_elasticity(_δ, _η, σ(s, mπ))
+    return _t
+end

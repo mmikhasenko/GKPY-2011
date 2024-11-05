@@ -19,4 +19,4 @@ kπ(s) = breakup(s, mπ)
 kK(s) = breakup(s, mK)
 kη(s) = breakup(s, mη)
 
-amplitude_from_phase_and_elasticity(δ, η, m) = (η .* exp(2im * δ) - 1) / (2σ(s, m))
+amplitude_from_phase_and_elasticity(δ, η, _σ) = (η .* cis(2δ) - 1) / (2im * _σ)

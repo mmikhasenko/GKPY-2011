@@ -7,7 +7,7 @@ Returns the S-wave scattering amplitude for a given model at energy squared `s` 
 Subtypes of `PiPiBase` should implement this function to provide a model-specific calculation
 of the S-wave amplitude.
 """
-function s_wave_amplitude(model::PiPiBase, s; pars = model.P)
+function s_wave_amplitude(model::PiPiBase, s; pars = model.S)
     throw(MethodError(s_wave_amplitude, (model, s)))
 end
 
@@ -17,7 +17,7 @@ end
 Returns the S-wave phase shift in radians for a given model at energy squared `s` (in GeV²).
 This function should be implemented by subtypes to provide model-specific calculations.
 """
-function s_wave_phase_shift(model::PiPiBase, s; pars = model.P)
+function s_wave_phase_shift(model::PiPiBase, s; pars = model.S)
     throw(MethodError(s_wave_phase_shift, (model, s)))
 end
 
