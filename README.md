@@ -49,7 +49,9 @@ end
 savefig("~/Documents/phase_shift.png")
 ```
 
-![pipi_spectum](https://github.com/user-attachments/assets/18efdaed-2d38-4188-8d88-769e41755455)
+![phase_shift](https://github.com/user-attachments/assets/aa358cf9-c117-43dd-8a0a-c1db18400289)
+
+The interval below 1.4GeV is constrained by the GKPY model, the higher range is effective parametrization that fits the data.
 
 ## How to Cite
 
