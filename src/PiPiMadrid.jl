@@ -1,6 +1,7 @@
 module PiPiMadrid
 
 using Parameters
+using ForwardDiff: gradient
 include("kinematics.jl")
 
 export s_wave_amplitude, s_wave_phase_shift, s_wave_elasticity, s_wave_coupled_channel_matrix

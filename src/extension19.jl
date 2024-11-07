@@ -98,6 +98,8 @@ by taking absolute value of `η = |1 + 2iσ t|`.
 
 
 
+
+
 ## Interval 2
 
 """
@@ -113,13 +115,13 @@ function δ0_interval2_deg(model::PRR19, s::Real; pars = model.S)
     sm = m_boundary1^2
     w2(sx) = conformal_w1(sx; s_left = sm, s_right = 2.0^2)
     δ0_boundary1 = δ0_interval1_deg(model, sm; pars)
-    ϵ = 1e-6
-    dδ0_ds = (δ0_interval1_deg(model, sm + ϵ; pars) - δ0_boundary1) / ϵ
-    dw2_ds = (w2(sm + ϵ) - w2(sm - ϵ)) / (2ϵ)
+    #
+    δ0′ = gradient(x -> δ0_interval1_deg(model, x[1]), [sm])[1]
+    w2′ = gradient(x -> w2(x[1]), [sm])[1]
     #
     _w2 = w2(s)
     d0, d1, d2 = coeff_d
-    Δ0 = dδ0_ds / dw2_ds + 4 * d0 - 9 * d1 + 16 * d2
+    Δ0 = δ0′ / w2′ + 4 * d0 - 9 * d1 + 16 * d2
     _sum = sum(enumerate((Δ0, coeff_d...))) do (i, di)
         T = CheybyshevT{i}()
         pm1 = 2 * mod(i, 2) - 1
@@ -156,11 +158,10 @@ function η0_interval2(model::PRR19, s; pars = model.S)
     #
     _ηm = η0_interval1(model, sm; pars)
     ϵ0 = sqrt(-log(_ηm))
-    ϵ = 1e-6
-    dη0_ds = (η0_interval1(model, sm + ϵ; pars) - _ηm) / ϵ
+    η0′ = gradient(x -> η0_interval1(model, x[1]; pars), [sm])[1]
     #
     qm = breakup(sm, mπ)
-    ϵ1 = -4qm^2 / ϵ0 * dη0_ds / _ηm
+    ϵ1 = -4qm^2 / ϵ0 * η0′ / _ηm
     coeff_ϵ = (ϵ0, ϵ1, coeff_ϵ_from2...)
     #
     Q = breakup(s, mπ) / qm - 1
