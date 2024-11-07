@@ -20,13 +20,6 @@ pkg> add https://github.com/mmikhasenko/PiPiMadrid.jl.git
 
 ## Usage
 
-Function `δ0`, `δ1`, and `δ2` give values of the phase shifts in S, P, and F waves, respectively, as functions of the squared mass of the $\pi\pi$ system.
-
-Signature of each function is
-```
-δ0(s; pars)
-```
-where the parameters are set to default values given by `s_wave_pars`, `p_wave_pars`, and `f_wave_pars`.
 
 ```julia
 using PiPiMadrid
@@ -45,13 +38,12 @@ let
     plot!(e -> s_wave_phase_shift(PRR19_default(), e^2), 0.3, 2.0, label = "δ0 PRR19")
     vspan!([GKPY11_default().S.m_boundary3, support[2]], alpha = 0.2)
 end
-
-savefig("~/Documents/phase_shift.png")
 ```
-
 ![phase_shift](https://github.com/user-attachments/assets/aa358cf9-c117-43dd-8a0a-c1db18400289)
 
-The interval below 1.4GeV is constrained by the GKPY model, the higher range is effective parametrization that fits the data.
+Elasticity is computed using `s_wave_elasticity` function.
+
+The interval below 1.4GeV is constrained by forward Roy-Steiner equations, the higher range is effective parametrization that fits the data.
 
 ## How to Cite
 
