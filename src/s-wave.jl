@@ -39,7 +39,7 @@ function cotδ0_interval1(model::GKPY11, s::Complex; pars = model.S)
 end
 
 cotδ0_interval1(model::GKPY11, s::Real; pars = model.S) =
-    cotδ0_interval1(model, s + iϵ; pars) |> real
+    cotδ0_interval1(model, s + iϵ; pars)
 
 function δ0_interval1(model::GKPY11, s::Real; pars = model.S)
     _cotδ0_interval1 = cotδ0_interval1(model, s; pars)

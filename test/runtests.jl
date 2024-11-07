@@ -76,9 +76,22 @@ import PiPiMadrid: t0_interval1, t0_interval2
 end
 
 
-import PiPiMadrid: η0_interval1, t0_interval1, t_conf, t_f0
+import PiPiMadrid: η0_interval1, t0_interval1, t_conf, t_f0, cotδ0_interval1, GKPY11_pure
 s, model = 1.1^2, PRR19_default()
-η0_interval1(model, s) # 0.48724352714295327
-t0_interval1(model, s) # 0.18573254487071456 + 0.6870385014284162im
-t_conf(s; pars = model.S) # 0.5554771006996477 + 0.8469959205910349im
+η0_interval1(model, s) ≈ 0.48724352714295327
+t0_interval1(model, s) ≈ 0.18573254487071456 + 0.6870385014284162im
+t_conf(s; pars = model.S) ≈ 0.5554771006996477 + 0.8469959205910349im
 t_f0(s; pars = model.S) ≈ 0.04109422398438417 + 0.3196611520971205im
+
+cotδ0_interval1(GKPY11_pure(), s + 1e-6im; pars = model.S)
+
+cotδ0_interval1(GKPY11_pure(), s; pars = model.S) # 0.5597460080769964 + 0.14649481533769904im
+# (b_coeffs, z0) = ((12.2, -0.9, 15.9, -5.7, -22.5, 6.9), 0.137)
+# conf_expansion = 33.24778846871989 + 8.733523922164654im
+
+using Plots
+let
+    plot()
+    plot!(e -> η0_interval1(model, e^2), 0.3, 1.4)
+    # plot!(e -> η0_interval2(model, e^2), 1.4, 2.0)
+end
