@@ -46,9 +46,8 @@ function get_MG(s_p, coeff_K)
     (; Msq, G)
 end
 
-struct GKPY11_pure <: GKPY11
-end
-t_conf(s; pars) = 1 / σ(s, mπ) / (cotδ0_interval1(GKPY11_pure(), s; pars) - 1im)
+GKPY11_pure = GKPY11()
+t_conf(s; pars) = 1 / σ(s, mπ) / (cotδ0_interval1(GKPY11_pure, s; pars) - 1im)
 
 ## Interval 1
 

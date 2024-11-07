@@ -1,8 +1,8 @@
 @with_kw struct PRR19{tS} <: PiPiBase
-    S::tS
+    S::tS = NamedTuple()
 end
 
-PRR19_defailt = PRR19(
+export PRR19_default = PRR19(
     # default parameters from the paper
     S = (
         b_coeffs = (12.2, -0.9, 15.9, -5.7, -22.5, 6.9),
