@@ -1,5 +1,8 @@
-abstract type PRR19 <: PiPiBase end
-@with_kw struct PRR19_default <: PRR19
+@with_kw struct PRR19{tS} <: PiPiBase
+    S::tS
+end
+
+PRR19_defailt = PRR19(
     # default parameters from the paper
     S = (
         b_coeffs = (12.2, -0.9, 15.9, -5.7, -22.5, 6.9),
@@ -12,5 +15,5 @@ abstract type PRR19 <: PiPiBase end
         coeff_ϵ_from2 = (10.3, 0.0, 0.0),
         #
         m_boundary2 = 2.0,
-    )
-end
+    ),
+)
