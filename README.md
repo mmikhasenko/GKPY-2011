@@ -7,19 +7,39 @@
 [![DOI](https://zenodo.org/badge/DOI/FIXME)](https://doi.org/FIXME)
 [![BestieTemplate](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/JuliaBesties/BestieTemplate.jl/main/docs/src/assets/badge.json)](https://github.com/JuliaBesties/BestieTemplate.jl)
 
-Julia implementation of the $\pi\pi$ scattering amplitudes from Madrid group.
+`PiPiMadrid.jl` is a Julia package providing implementations of two-particle scattering amplitudes for pion-pion interactions based on models developed by the Madrid Group.
+The package includes methods to access these amplitudes in different partial waves.
+
+Two models are available:
 
 1. Module `GKPY11` implements S,P, and F waves following the ["Pion-pion scattering amplitude, IV"](https://inspirehep.net/literature/889131) paper.
 2. Module `PRR19` codes the S-wave from the ["Global parameterization of ππ scattering up to 2 GeV"](https://inspirehep.net/literature/1747223)
 
+## Functionality
+
+The package exports the following main functions for each wave channel:
+
+- **Amplitude**: `s_wave_amplitude`, `p_wave_amplitude`, `d_wave_amplitude`, `f_wave_amplitude`
+- **Phase Shift**: `s_wave_phase_shift`, `p_wave_phase_shift`, `d_wave_phase_shift`, `f_wave_phase_shift`
+- **Elasticity**: `s_wave_elasticity`, `p_wave_elasticity`
+
+All functions have the same signature: `property(model, s; pars)`, where a type of the `model` parameter is used for dispatch, the default value of the `pars` is set to a component of the model, like `model.S` or `model.P`.
+The `s` is a Mandelstam variable, `s = m^2`, where `m` is a mass of the pion pair.
+
+Not every method is defined for each model. See a section on contributing to add more methods.
+
 ## Installation
 
+Install the package using Julia’s package manager:
+
 ```julia
-pkg> add https://github.com/mmikhasenko/PiPiMadrid.jl.git
+] add https://github.com/mmikhasenko/PiPiMadrid.jl.git
 ```
 
 ## Usage
 
+After installation, `PiPiMadrid.jl` provides functions to evaluate pion-pion scattering amplitudes.
+The following example demonstrates plotting the S-wave amplitude using the `GKPY11` model.
 
 ```julia
 using PiPiMadrid
@@ -44,6 +64,13 @@ end
 Elasticity is computed using `s_wave_elasticity` function.
 
 The interval below 1.4GeV is constrained by forward Roy-Steiner equations, the higher range is effective parametrization that fits the data.
+
+## Contributing
+
+Contributions are welcome to extend `PiPiMadrid.jl`'s functionality, including additional wave channels or improvements.
+
+1. **Issues**: If you find bugs, missing features, or have suggestions, please open an issue.
+2. **Pull Requests**: For feature additions or fixes, fork the repository, implement your changes in a branch, and submit a pull request. Please document any new functions or parameters.
 
 ## How to Cite
 
