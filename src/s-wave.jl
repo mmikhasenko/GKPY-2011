@@ -43,7 +43,7 @@ cotδ0_interval1(model::GKPY11, s::Real; pars = model.S) =
 
 function δ0_interval1(model::GKPY11, s::Real; pars = model.S)
     _cotδ0_interval1 = cotδ0_interval1(model, s; pars)
-    _δ0_interval1 = atan(1 / _cotδ0_interval1)
+    _δ0_interval1 = atan(1 / _cotδ0_interval1) |> real
     return _δ0_interval1 < 0 ? _δ0_interval1 + π : _δ0_interval1
 end
 
