@@ -74,3 +74,11 @@ import PiPiMadrid: t0_interval1, t0_interval2
     @test PiPiMadrid.η0_interval1(PRR19_default(), sm) ≈ PiPiMadrid.η0_interval2(PRR19_default(), sm)
     @test PiPiMadrid.t0_interval1(PRR19_default(), sm) ≈ PiPiMadrid.t0_interval2(PRR19_default(), sm)
 end
+
+
+import PiPiMadrid: η0_interval1, t0_interval1, t_conf, t_f0
+s, model = 1.1^2, PRR19_default()
+η0_interval1(model, s) # 0.48724352714295327
+t0_interval1(model, s) # 0.18573254487071456 + 0.6870385014284162im
+t_conf(s; pars = model.S) # 0.5554771006996477 + 0.8469959205910349im
+t_f0(s; pars = model.S) ≈ 0.04109422398438417 + 0.3196611520971205im
