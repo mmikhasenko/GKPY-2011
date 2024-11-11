@@ -1,7 +1,7 @@
 name = "PiPiMadrid"
 uuid = "768ee2b6-c705-4f61-b10f-f525213ab444"
 authors = ["Mikhail Mikhasenko <mikhail.mikhasenko@cern.ch>"]
-version = "0.3.0"
+version = "0.3.1"
 
 [deps]
 ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
