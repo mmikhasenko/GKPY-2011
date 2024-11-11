@@ -5,7 +5,7 @@
     F::tF = NamedTuple()
 end
 
-GKPY11_default = GKPY11(;
+const GKPY11_default = GKPY11(;
     S = (m_boundary1 = 0.85,
         m_boundary3 = 1.42,
         # interval 1,

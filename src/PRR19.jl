@@ -2,7 +2,7 @@
     S::tS = NamedTuple()
 end
 
-export PRR19_default = PRR19(
+const PRR19_default = PRR19(
     # default parameters from the paper
     S = (
         b_coeffs = (12.2, -0.9, 15.9, -5.7, -22.5, 6.9),
