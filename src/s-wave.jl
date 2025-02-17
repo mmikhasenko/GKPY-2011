@@ -25,21 +25,24 @@ function s_wave_phase_shift(model::GKPY11, s::Real; pars = model.S)
 end
 
 
-function cotδ0_interval1(model::GKPY11, s::Complex; pars = model.S)
+function σ_cotδ0_interval1(model::GKPY11, s::Complex; pars = model.S)
     @unpack b_coeffs, z0 = pars
     #
     w = conformal_w(s; s0 = (2 * mK)^2)
     conf_expansion = sum(enumerate(b_coeffs)) do (i, b)
         b * w^(i - 1)
     end
-    _cotδ0_interval1 =
-        sqrt(s) / (2 * kπ(s)) * mπ^2 / (s - z0^2 / 2) *
+    _σ_cotδ0_interval1 =
+        mπ^2 / (s - z0^2 / 2) *
         (z0^2 / (mπ * sqrt(s)) + conf_expansion)
-    return _cotδ0_interval1
+    return _σ_cotδ0_interval1
 end
 
-cotδ0_interval1(model::GKPY11, s::Real; pars = model.S) =
-    cotδ0_interval1(model, s + iϵ; pars)
+σ_cotδ0_interval1(model::GKPY11, s::Real; pars = model.S) =
+    σ_cotδ0_interval1(model, s + iϵ; pars)
+
+cotδ0_interval1(model::GKPY11, s; pars) = σ_cotδ0_interval1(model, s; pars) / σ(s, mπ)
+
 
 function δ0_interval1(model::GKPY11, s::Real; pars = model.S)
     _cotδ0_interval1 = cotδ0_interval1(model, s; pars)
