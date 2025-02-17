@@ -75,8 +75,16 @@ import PiPiMadrid: t0_interval1, t0_interval2
 end
 
 @testset "Elasticity interval 1" begin
-    model = PRR19_default
+    model = PiPiMadrid.PRR19_default
     s_test = 1.1^2
-    @test PiPiMadrid.η0_interval1(model, s_test) ≈ 0.48724352714295327
+    @test PiPiMadrid.η0_interval1(model, s_test) ≈ 0.4872435393540931
     @test PiPiMadrid.t0_interval1(model, s_test) ≈ 0.18573254487071456 + 0.6870385014284162im
+end
+
+@testset "Close to threshold" begin
+    m_thr = m_thr = 2mπ + 8.627191629750897e-6
+    v = PiPiMadrid.t0_interval1(PRR19_default, m_thr^2)
+    # Imaginary part should be almost zero
+    @test imag(v) ≈ 0.00041310218334773683
+    @test real(v) ≈ 0.22823338085075165
 end

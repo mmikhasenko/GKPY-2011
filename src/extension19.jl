@@ -47,7 +47,7 @@ function get_MG(s_p, coeff_K)
 end
 
 GKPY11_pure = GKPY11()
-t_conf(s; pars) = 1 / σ(s, mπ) / (cotδ0_interval1(GKPY11_pure, s; pars) - 1im)
+t_conf(s; pars) = 1 / (σ_cotδ0_interval1(GKPY11_pure, s; pars) - 1im * σ(s, mπ))
 
 ## Interval 1
 
